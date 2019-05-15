@@ -1,0 +1,15 @@
+.media {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.exif-info {
+  padding: 10px;
+}
+
+.navbtns {
+  position: relative;
+}

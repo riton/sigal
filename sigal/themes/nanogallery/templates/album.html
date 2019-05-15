@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+  {% set numbers = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"] %}
+  {% set column_size = settings.colorbox_column_size %}
+  {% set nb_columns = (9 / column_size)|int %}
+  {% set column_size_t = numbers[column_size] %}
+
+  {% macro img_description(media) -%}
+    {% if media.big %} data-big="{{ media.big_url }}"{% endif %}
+    {% if media.exif %}
+      {% if media.exif.datetime %}
+        data-date=", {{ media.exif.datetime }}"
+      {% endif %}
+    {% endif %}
+  {%- endmacro %}
+
+  <div id="nanogallery2" data-nanogallery2='{
+      "imageTransition": "slideAppear",
+      "thumbnailWidth": 200,
+      "thumbnailHeight": 200,
+      "thumbnailGutterWidth": 500,
+    }'>
+    {% for media in album.medias %}
+    {% if media.type == "image" %}
+    <a
+      href="{{ media.url }}"
+      data-ngthumb="{{ media.url }}"
+      {% if media.exif %}
+      data-ngexiffocallength="{{ media.exif.focal }}"
+      data-ngexiffstop="{{ media.exif.fstop }}"
+      data-ngexifexposure="{{ media.exif.exposure }}"
+      data-ngexifiso="{{ media.exif.iso }}"
+      data-ngexiftime="{{ media.exif.datetime }}"
+      {% endif %}
+    ></a>
+    
+
+    {% endif %}
+    {% endfor %}
+
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  <script src="{{ theme.url }}/js/jquery-3.1.0.min.js"></script>
+  <script src="{{ theme.url }}/js/jquery.nanogallery2.min.js"></script>
+  <script src="{{ theme.url }}/js/jquery.nanogallery2.core.min.js"></script>
+  <script src="{{ theme.url }}/js/jquery.touchSwipe.min.js"></script>
+{% endblock %}
